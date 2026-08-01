@@ -17,15 +17,26 @@ def clean_search_query(query: str) -> str:
 
 def find_word_positions(sentence_words: list, query_words: list) -> list:
     """
-    Finds the starting word positions of a query within a single sentence's word list.
-    Position numbering starts from 1.
+    Finds starting word positions of a query within a single sentence's word list.
+    Supports partial word matching (e.g., 'struc' matches 'structure').
     """
     positions = []
     query_len = len(query_words)
     
     # Slide across the individual words of this sentence
     for i in range(len(sentence_words) - query_len + 1):
-        if sentence_words[i : i + query_len] == query_words:
+        match_found = True
+        
+        # Check if each word in the document starts with the query term
+        for j in range(query_len):
+            doc_word = sentence_words[i + j]
+            search_word = query_words[j]
+            
+            if not doc_word.startswith(search_word):
+                match_found = False
+                break
+                
+        if match_found:
             positions.append(i + 1) # 1-based index positioning
 
     return positions
