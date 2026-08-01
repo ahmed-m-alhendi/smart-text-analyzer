@@ -32,7 +32,6 @@ if __name__ == "__main__":
                 print(f"  • '{char}': {count}x")
             choice = display_menu()
 
-
         elif choice == "2":
             doc.raw_text = initial_text_input_prompt()
             print(f"Text inserted successfully.\n{doc.raw_text}")
@@ -41,16 +40,13 @@ if __name__ == "__main__":
             current_text = doc.processed_text
             choice = display_menu()
 
-
         elif choice == "3":
             search_prompt(doc)
             choice = display_menu()
 
-
         elif choice == "4":
             autocomplete_prompt(doc)
             choice = display_menu()
-
 
         elif choice == "5":
             sentiment_label, positive_count, negative_count = analyze_sentiment(doc.processed_text)
@@ -59,7 +55,6 @@ if __name__ == "__main__":
             print(f"  Positive Words Count: {positive_count}")
             print(f"  Negative Words Count: {negative_count}")
             choice = display_menu()
-
 
         elif choice == "6":
             top_keywords = keyword_extraction(doc.processed_text, top_n=5)            
@@ -102,7 +97,6 @@ if __name__ == "__main__":
                 current_text = previous_text
             choice = display_menu()
 
-
         elif choice == "9":
             print("Redo selected.")
             next_text = manager.redo(current_text)
@@ -113,8 +107,7 @@ if __name__ == "__main__":
                 current_text = next_text
             choice = display_menu()
 
-
-        elif choice == "9":
+        elif choice == "10":
             print("Exiting application. Goodbye!")
             break
         else:
