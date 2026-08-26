@@ -22,7 +22,11 @@ def find_word_positions(sentence_words: list, query_words: list) -> list:
     """
     positions = []
     query_len = len(query_words)
-    
+
+
+    # 
+    # I love data structure , data struc 
+
     # Slide across the individual words of this sentence
     for i in range(len(sentence_words) - query_len + 1):
         match_found = True

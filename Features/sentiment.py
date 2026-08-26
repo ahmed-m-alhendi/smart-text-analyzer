@@ -23,7 +23,8 @@ def tokenize(text:str) -> list[str]:
     """
     Convert text into lowercase words.
     """
-    return re.findall(r"\b[\w']+\b", text.lower())
+
+    return re.findall(r"\b[\w']+\b", text.lower())    
 def analyze_sentiment(text:str) -> tuple[str, int, int]:
     """
     Analyze the sentiment of the given text.
@@ -35,7 +36,7 @@ def analyze_sentiment(text:str) -> tuple[str, int, int]:
     """
     positive = 0
     negative = 0
-    words = tokenize(text)
+    words = tokenize(text) 
 
     for i,word in enumerate(words):
         negated = i > 0 and words[i -  1] in NEGATIONS
