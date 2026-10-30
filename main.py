@@ -12,9 +12,9 @@ from Models.text_document import TextDocument
 if __name__ == "__main__":
     choice = display_menu()
     manager = UndoRedoManager()
-    current_text = ""
     doc = TextDocument()
-    while choice != "10":
+    while True:
+
         if choice == "1":
             metrics = generate_dashboard(doc, top_n_chars=5)
             
@@ -33,12 +33,23 @@ if __name__ == "__main__":
             choice = display_menu()
 
         elif choice == "2":
-            doc.raw_text = initial_text_input_prompt()
-            print(f"Text inserted successfully.\n{doc.raw_text}")
-            process_document(doc)
-            manager.save_state(current_text)
-            current_text = doc.processed_text
-            choice = display_menu()
+            new_text = initial_text_input_prompt()
+
+            if new_text.strip():
+                # Save the previous state before inserting new text
+                manager.save_state(doc.raw_text)
+                print(f"Text inserted successfully.\n{doc.raw_text}")
+
+                # Update the document
+                doc.raw_text = new_text
+                process_document(doc)
+
+                print("Text inserted successfully.")
+
+            else:
+                print("No text entered. Existing document was kept.")
+
+            choice = display_menu()  
 
         elif choice == "3":
             search_prompt(doc)
@@ -88,23 +99,34 @@ if __name__ == "__main__":
             choice = display_menu()
 
         elif choice == "8":
+
             print("Undo selected.")
-            previous_text = manager.undo(current_text)
-            if previous_text == current_text:
+
+            previous_text = manager.undo(doc.raw_text)
+
+            if previous_text == doc.raw_text:
                 print("Nothing to undo!")
+
             else:
+                doc.raw_text = previous_text
+                process_document(doc)
+
                 print(f"Undo performed! Reverted to: {previous_text}")
-                current_text = previous_text
+            
             choice = display_menu()
 
         elif choice == "9":
             print("Redo selected.")
-            next_text = manager.redo(current_text)
-            if next_text == current_text:
+            next_text = manager.redo(doc.raw_text)
+
+            if next_text == doc.raw_text:
                 print("Nothing to redo!")
+            
             else:
+                doc.raw_text = next_text
+                process_document(doc)
                 print(f"Redo performed! Advanced to: {next_text}")
-                current_text = next_text
+            
             choice = display_menu()
 
         elif choice == "10":
